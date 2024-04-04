@@ -2,19 +2,24 @@
 ;Zachary Nelson
 ;Ethan Bylek
 
+;initial rod v
+;length n
 (define (rodCut v n)
   (if (equal? n 0)0
       {let*
-      [(q -1)
-       (i 1)]
+      [(r -1)]
+        ;iterate through potential max revenues
         [for ([i n])
-          [set! q (max q (+ (vector-ref v i) (rodCut v (- n i))))
+          ;check each recursive call
+          [set! r (max r (+ (vector-ref v (+ i 1)) (rodCut v (- n (+ i 1)))))
           ]
         ]
-        q}))
+        ;outputed revenue
+        r}))
+;test function
 (define (testing)
-  (rodCut (make-vector 2 2)0))
-
+  (rodCut(make-vector 3 3)2)
+)
 
 
 
