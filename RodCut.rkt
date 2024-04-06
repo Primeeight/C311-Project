@@ -10,19 +10,17 @@
       {let
        ([r -1])
         ;iterate through potential max revenues
-        [for ([i (in-range 1 (add1 n))])
-          (if (> i 10)
-              (set! i 1)
+        [for ([i (in-range 1 (min n 10))])
           ;check each recursive call
-          [set! r (max r (+ (vector-ref v i) (rodCut v (- n i))))
-          ])
+          [set! r (max r (+ (vector-ref v  (add1 i)) (rodCut v (- n (+ i 1)))))
+          ]
          ]
         ;outputed revenue
         r}))
 
 
 ; test function
-; this fuction takes a long time to run
+; this function takes a long time to run
 ; so use (testing) at your own risk
 (define (testing)
   ; define prices array
@@ -30,7 +28,8 @@
 
   ; define test cases
   (define tests
-    `(("Test case 1: Length 10" ,(rodCut prices 10) 30)
+    `(
+      ("Test case 1: Length 10" ,(rodCut prices 10) 30)
       ("Test case 2: Length 20" ,(rodCut prices 20) 60)
       ("Test case 3: Length 30" ,(rodCut prices 30) 90)
       ("Test case 4: Length 40" ,(rodCut prices 40) 120)
