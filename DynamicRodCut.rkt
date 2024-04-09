@@ -1,4 +1,4 @@
-#lang racket
+#lang slideshow
 ;Zachary Nelson
 ;Ethan Bilyk
 
@@ -13,7 +13,7 @@
        ) 
           ;check each recursive call
         [set! r (rodCutAux v n v2 v3)]
-        [printSolutions n v3]
+        [printSolution n v3]
         ;output the revenue
        r
         }
@@ -48,13 +48,28 @@
   ;output revenue.
   r
 )
-(define (printSolutions n v)
-  {when (> n 0)
-    (display (vector-ref v n))
-    (display "\n")
-    (set! n (- n (vector-ref v n)))
-    (printSolutions n v)
-    }
+
+(define (rodpiece n)
+  ;better let utilization.
+(let* ([unitt (colorize (rectangle 20 15) "red")])
+  ;key differnece is using apply for the list instead of trying to map the function to each.
+(apply hc-append (vector->list(make-vector n unitt)))
+  )
+  )
+
+(define (printSolution n s)
+  (print (printSolutionAux n s))
+  (display "\n")
+  )
+
+(define (printSolutionAux n s)
+  (if (> n 0)
+  (let* ([element (vector-ref s n)])
+    ;Converts the picture given to a vector
+    ;Recursive call
+    (vector-append (vector (rodpiece element)) (printSolutionAux(- n element) s)))
+  #()
+  )
   )
 
 
@@ -68,9 +83,9 @@
   (define tests
     `(
       ;("Test case 1: Length 1" ,(rodCut prices 1) 1)
-      ;("Test case 2: Length 5" ,(rodCut prices 5) 13)
+      ("Test case 2: Length 5" ,(rodCut prices 5) 13)
       ;("Test case 1: Length 10" ,(rodCut prices 10) 30)
-      ("Test case 2: Length 16" ,(rodCut prices 16) 0)
+      ;("Test case 2: Length 15" ,(rodCut prices 15) 0)
       ;("Test case 2: Length 20" ,(rodCut prices 20) 60)
       ;("Test case 3: Length 30" ,(rodCut prices 30) 90)
       ;("Test case 4: Length 40" ,(rodCut prices 40) 120)
